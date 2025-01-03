@@ -9,7 +9,7 @@ const List = () => {
         <div className="list-item" key={name}>
           <div className="list-item-title">
             <img src={pokeBallImg} alt="poke ball image" width="30rem" />
-            {name?.toUpperCase()}
+            {name}
           </div>
           <img src={favFillIcon} alt="poke ball image" width="30rem" />
         </div>

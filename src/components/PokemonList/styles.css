@@ -4,7 +4,7 @@
   margin: auto 48px;
 
   > * {
-    width: 50%;
+    flex: 1 1 0;
     text-align: center;
   }
 }
