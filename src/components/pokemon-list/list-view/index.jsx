@@ -1,6 +1,6 @@
 import "./style.css";
-import Filter from "./Filter";
-import List from "./List";
+import Filter from "./filter";
+import List from "./list";
 
 const ListView = () => {
   return (

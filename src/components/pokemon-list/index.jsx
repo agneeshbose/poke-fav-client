@@ -1,5 +1,6 @@
-import ListView from "./ListView";
+import ListView from "./list-view";
 import Preview from "./Preview";
+
 import "./styles.css";
 
 const PokemonList = () => {

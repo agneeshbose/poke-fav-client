@@ -3,7 +3,7 @@ import pokeBallImg from "../../../assets/images/Pokeball_2.png";
 import favFillIcon from "../../../assets/images/fav-fill.svg";
 import pokeList from "../../../assets/pokemon.json";
 import pokeFavList from "../../../assets/pokemon_fav.json";
-import { DataProviderContext } from "../../../libs/contexts/data-provider.context";
+import { DataProviderContext } from "../../../contexts/data-provider.context";
 
 const List = () => {
   const { activeFilter } = useContext(DataProviderContext);

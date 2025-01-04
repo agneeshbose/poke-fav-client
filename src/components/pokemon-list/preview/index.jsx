@@ -1,6 +1,6 @@
 import "./style.css";
 import favEmptyIcon from "../../../assets/images/fav-empty.svg";
-import AttributeCard from "./AttributeCard";
+import AttributeCard from "./attribute-card";
 
 const Preview = () => {
   return (

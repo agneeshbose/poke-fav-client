@@ -1,6 +1,6 @@
 import "./App.css";
 import pokeLogo from "./assets/images/International_Pokémon_logo.svg.png";
-import PokemonList from "./components/PokemonList";
+import PokemonList from "./components/pokemon-list";
 
 function App() {
   return (

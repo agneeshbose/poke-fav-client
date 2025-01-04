@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { DataProviderContext } from "../../../libs/contexts/data-provider.context";
+import { DataProviderContext } from "../../../contexts/data-provider.context";
 
 const filters = [
   { label: "All", value: "ALL" },
