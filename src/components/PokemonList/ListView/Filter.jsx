@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useContext } from "react";
+import { DataProviderContext } from "../../../libs/contexts/data-provider.context";
 
 const filters = [
-  { label: "All", value: "all" },
-  { label: "Favourites", value: "fav" },
+  { label: "All", value: "ALL" },
+  { label: "Favourites", value: "FAV" },
 ];
 
 const Filter = () => {
-  const [activeFilter, setActiveFilter] = useState(filters[0].value);
+  const { activeFilter, updateActiveFilter } = useContext(DataProviderContext);
 
   return (
     <div className="filter">
@@ -18,7 +19,7 @@ const Filter = () => {
             <div
               key={value}
               className={`filter-item ${isActive ? "active" : ""}`}
-              onClick={() => setActiveFilter(value)}
+              onClick={() => updateActiveFilter(value)}
             >
               {label}
             </div>
