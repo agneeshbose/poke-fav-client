@@ -58,7 +58,7 @@ const List = () => {
     };
   }, [loadMore, hasMore, isLoading, activeList?.length]);
 
-  if (isLoading && activeList?.length === 0) {
+  if (isLoading && !activeList?.length) {
     return (
       <div>
         <Skeleton

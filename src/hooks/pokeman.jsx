@@ -5,10 +5,12 @@ import {
   getPokemonEvolutionChain,
   getPokemonSpecies,
 } from "../api/services/pokemon";
+import useErrorToast from "./error-toast";
 
 const LIMIT = 20;
 
 const useAllPokemon = () => {
+  const { showErrorMessage } = useErrorToast();
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
@@ -31,10 +33,11 @@ const useAllPokemon = () => {
       setHasMore(!!res?.data?.next);
     } catch (err) {
       setError(err);
+      showErrorMessage("Something went wrong!");
     } finally {
       setIsLoading(false);
     }
-  }, [offset]);
+  }, [offset, showErrorMessage]);
 
   useEffect(() => {
     fetchAllPokemon();
@@ -57,6 +60,7 @@ const useAllPokemon = () => {
 };
 
 const usePokemon = (id) => {
+  const { showErrorMessage } = useErrorToast();
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
@@ -70,10 +74,11 @@ const usePokemon = (id) => {
       setData(res?.data);
     } catch (err) {
       setError(err);
+      showErrorMessage("Something went wrong!");
     } finally {
       setIsLoading(false);
     }
-  }, [id]);
+  }, [id, showErrorMessage]);
 
   useEffect(() => {
     if (id) {
@@ -89,6 +94,7 @@ const usePokemon = (id) => {
 };
 
 const usePokemonEvolutionChain = (id) => {
+  const { showErrorMessage } = useErrorToast();
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
@@ -115,10 +121,11 @@ const usePokemonEvolutionChain = (id) => {
       setData(evolutions);
     } catch (err) {
       setError(err);
+      showErrorMessage("Something went wrong!");
     } finally {
       setIsLoading(false);
     }
-  }, [id]);
+  }, [id, showErrorMessage]);
 
   useEffect(() => {
     if (id) {

@@ -1,4 +1,7 @@
+import { ToastContainer } from "react-toastify";
+
 import "./App.css";
+import "react-toastify/dist/ReactToastify.css";
 import "react-loading-skeleton/dist/skeleton.css";
 import pokeLogo from "./assets/images/International_Pokémon_logo.svg.png";
 
@@ -13,6 +16,7 @@ function App() {
       <main>
         <PokemonList />
       </main>
+      <ToastContainer />
     </>
   );
 }

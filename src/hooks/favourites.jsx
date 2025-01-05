@@ -6,8 +6,10 @@ import {
   removeFavourites,
 } from "../api/services/favourites";
 import { DataProviderContext } from "../contexts/data-provider.context";
+import useErrorToast from "./error-toast";
 
 const useFavourites = () => {
+  const { showErrorMessage } = useErrorToast();
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
@@ -21,10 +23,11 @@ const useFavourites = () => {
       setData(res?.data);
     } catch (err) {
       setError(err);
+      showErrorMessage("Something went wrong!");
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [showErrorMessage]);
 
   useEffect(() => {
     fetchFavourites();
@@ -39,6 +42,7 @@ const useFavourites = () => {
 };
 
 const useAddToFavourites = () => {
+  const { showErrorMessage } = useErrorToast();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const { favourites } = useContext(DataProviderContext);
@@ -53,6 +57,7 @@ const useAddToFavourites = () => {
       return response;
     } catch (err) {
       setError(err);
+      showErrorMessage("Something went wrong!");
       return Promise.reject(err);
     } finally {
       setIsLoading(false);
@@ -67,6 +72,7 @@ const useAddToFavourites = () => {
 };
 
 const useRemoveFromFavourites = () => {
+  const { showErrorMessage } = useErrorToast();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const { favourites } = useContext(DataProviderContext);
@@ -81,6 +87,7 @@ const useRemoveFromFavourites = () => {
       return response;
     } catch (err) {
       setError(err);
+      showErrorMessage("Something went wrong!");
       return Promise.reject(err);
     } finally {
       setIsLoading(false);
