@@ -27,7 +27,7 @@ const List = () => {
     const { scrollHeight, scrollTop, clientHeight } = e.target;
     const bottom = scrollHeight === scrollTop + clientHeight;
 
-    if (bottom && hasMore && !isLoading) {
+    if (activeList?.length > 0 && bottom && hasMore && !isLoading) {
       loadMore();
     }
   };
@@ -35,7 +35,12 @@ const List = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && hasMore && !isLoading) {
+        if (
+          entries[0].isIntersecting &&
+          hasMore &&
+          !isLoading &&
+          activeList?.length > 0
+        ) {
           loadMore();
         }
       },
@@ -51,7 +56,7 @@ const List = () => {
         observer.unobserve(observerRef.current);
       }
     };
-  }, [loadMore, hasMore, isLoading]);
+  }, [loadMore, hasMore, isLoading, activeList?.length]);
 
   if (isLoading && activeList?.length === 0) {
     return (
