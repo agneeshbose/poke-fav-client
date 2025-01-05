@@ -1,9 +1,10 @@
-import { useContext } from "react";
+import { useContext, useEffect, useRef } from "react";
+import Skeleton from "react-loading-skeleton";
+
 import pokeBallImg from "../../../assets/images/Pokeball_2.png";
 import favFillIcon from "../../../assets/images/fav-fill.svg";
 import { DataProviderContext } from "../../../contexts/data-provider.context";
 import { useAllPokemon } from "../../../hooks/pokeman";
-import Skeleton from "react-loading-skeleton";
 
 const List = () => {
   const {
@@ -14,11 +15,45 @@ const List = () => {
   } = useContext(DataProviderContext);
 
   const pokemon = useAllPokemon();
+  const observerRef = useRef(null);
 
-  const activeList =
-    activeFilter === "ALL" ? pokemon.data?.results : favourites.data;
+  const showAll = activeFilter === "ALL";
+  const isLoading = showAll ? pokemon.isLoading : favourites.isLoading;
+  const activeList = showAll ? pokemon.data : favourites.data;
+  const loadMore = showAll ? pokemon.loadMore : null;
+  const hasMore = showAll ? pokemon.hasMore : false;
 
-  if (favourites.isLoading || pokemon.isLoading) {
+  const handleScroll = (e) => {
+    const { scrollHeight, scrollTop, clientHeight } = e.target;
+    const bottom = scrollHeight === scrollTop + clientHeight;
+
+    if (bottom && hasMore && !isLoading) {
+      loadMore();
+    }
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore && !isLoading) {
+          loadMore();
+        }
+      },
+      { threshold: 1 }
+    );
+
+    if (observerRef.current) {
+      observer.observe(observerRef.current);
+    }
+
+    return () => {
+      if (observerRef.current) {
+        observer.unobserve(observerRef.current);
+      }
+    };
+  }, [loadMore, hasMore, isLoading]);
+
+  if (isLoading && activeList?.length === 0) {
     return (
       <div>
         <Skeleton
@@ -35,7 +70,7 @@ const List = () => {
   }
 
   return (
-    <div className="list">
+    <div className="list" onScroll={handleScroll}>
       {activeList?.map(({ name, url }) => {
         const isFavourite = favourites.data?.some((item) => item.name === name);
         const isActive = activePreviewItem?.name === name;
@@ -56,6 +91,8 @@ const List = () => {
           </div>
         );
       })}
+      {isLoading && <p>Loading...</p>}
+      <div ref={observerRef} />
     </div>
   );
 };

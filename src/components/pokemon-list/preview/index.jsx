@@ -31,7 +31,7 @@ const Preview = () => {
     (item) => item?.name === activePreviewItem?.name
   );
 
-  if (pokemon.isLoading) {
+  if (pokemon.isLoading || evolutionChain.isLoading) {
     return (
       <div className="preview-container">
         <Skeleton
@@ -105,7 +105,12 @@ const Preview = () => {
         name="Types"
         values={pokemon?.data?.types?.map((item) => item?.type?.name)}
       />
-      <AttributeCard name="Evolution options" values={evolutionChain.data} />
+
+      <AttributeCard
+        name="Evolution options"
+        values={evolutionChain.data}
+        loading={evolutionChain.isLoading}
+      />
     </div>
   );
 };

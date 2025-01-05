@@ -1,8 +1,11 @@
 import apiClient from "../api-client";
 import API_ENDPOINTS from "../endpoints";
 
-const getAllPokemon = async () => {
-  const response = await apiClient.get(`${API_ENDPOINTS.POKE}/pokemon`);
+const getAllPokemon = async ({ limit = 6, offset = 0 }) => {
+  const query = new URLSearchParams({ limit, offset });
+  const response = await apiClient.get(
+    `${API_ENDPOINTS.POKE}/pokemon?${query.toString()}`
+  );
   return response.data;
 };
 

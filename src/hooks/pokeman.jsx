@@ -6,33 +6,52 @@ import {
   getPokemonSpecies,
 } from "../api/services/pokemon";
 
+const LIMIT = 20;
+
 const useAllPokemon = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
+  const [offset, setOffset] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
 
   const fetchAllPokemon = useCallback(async () => {
     setIsLoading(true);
     setError(null);
 
     try {
-      const res = await getAllPokemon();
-      setData(res?.data);
+      const res = await getAllPokemon({ offset, limit: LIMIT });
+      setData((prevData) => {
+        if (prevData?.length > 0) {
+          const newData = res?.data?.results;
+          return [...prevData, ...newData];
+        }
+        return res?.data?.results || [];
+      });
+      setHasMore(!!res?.data?.next);
     } catch (err) {
       setError(err);
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [offset]);
 
   useEffect(() => {
     fetchAllPokemon();
   }, [fetchAllPokemon]);
 
+  const loadMore = () => {
+    if (!isLoading && hasMore) {
+      setOffset((prev) => prev + LIMIT);
+    }
+  };
+
   return {
     isLoading,
     data,
     error,
+    hasMore,
+    loadMore,
     refetch: fetchAllPokemon,
   };
 };
@@ -42,25 +61,25 @@ const usePokemon = (id) => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
+  const fetchPokemon = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const res = await getPokemon(id);
+      setData(res?.data);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [id]);
+
   useEffect(() => {
-    const fetchPokemon = async () => {
-      setIsLoading(true);
-      setError(null);
-
-      try {
-        const res = await getPokemon(id);
-        setData(res?.data);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     if (id) {
       fetchPokemon();
     }
-  }, [id]);
+  }, [id, fetchPokemon]);
 
   return {
     isLoading: isLoading,
@@ -74,40 +93,38 @@ const usePokemonEvolutionChain = (id) => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchPokemonEvolutionChain = async () => {
-      setIsLoading(true);
-      setError(null);
+  const fetchPokemonEvolutionChain = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
 
-      try {
-        const res = await getPokemonSpecies(id);
+    try {
+      const res = await getPokemonSpecies(id);
 
-        const evolutionChainParts = res?.data?.evolution_chain?.url?.split("/");
-        const evolutionChainId =
-          evolutionChainParts[evolutionChainParts.length - 2];
+      const evolutionChainUrl = res?.data?.evolution_chain?.url;
+      const evolutionChainId = evolutionChainUrl?.split("/").slice(-2, -1)[0];
+      const chainData = await getPokemonEvolutionChain(evolutionChainId);
 
-        const chainData = await getPokemonEvolutionChain(evolutionChainId);
+      const evolutions = [];
+      let current = chainData?.data?.chain;
 
-        const evolutions = [];
-        let current = chainData?.data?.chain;
-
-        while (current) {
-          evolutions.push(current.species.name);
-          current = current.evolves_to[0];
-        }
-
-        setData(evolutions);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setIsLoading(false);
+      while (current) {
+        evolutions.push(current.species.name);
+        current = current.evolves_to?.[0];
       }
-    };
 
+      setData(evolutions);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [id]);
+
+  useEffect(() => {
     if (id) {
       fetchPokemonEvolutionChain();
     }
-  }, [id]);
+  }, [id, fetchPokemonEvolutionChain]);
 
   return {
     isLoading,
