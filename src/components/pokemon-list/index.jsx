@@ -1,5 +1,5 @@
 import ListView from "./list-view";
-import Preview from "./Preview";
+import Preview from "./preview";
 
 import "./styles.css";
 
