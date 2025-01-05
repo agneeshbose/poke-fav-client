@@ -5,7 +5,7 @@ const useErrorToast = () => {
   const showErrorMessage = useCallback((message) => {
     if (message) {
       toast.error(message, {
-        position: "bottom-left",
+        position: "top-right",
         autoClose: 5000,
         hideProgressBar: true,
         closeOnClick: true,
