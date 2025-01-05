@@ -65,6 +65,12 @@
       cursor: pointer;
       user-select: none;
     }
+
+    &.active {
+      cursor: pointer;
+      user-select: none;
+      outline: 3px solid rgb(255, 204, 1);
+    }
   }
 }
 

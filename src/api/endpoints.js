@@ -1,5 +1,5 @@
 const API_ENDPOINTS = {
-  POKEMON: "/pokemon",
+  POKE: "/poke",
   FAVOURITES: "/favourites",
 };
 

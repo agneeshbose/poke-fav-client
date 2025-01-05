@@ -1,16 +1,35 @@
 import PropTypes from "prop-types";
-import { createContext, useState } from "react";
+import { createContext, useMemo, useState } from "react";
+import { useFavourites } from "../hooks/favourites";
 
 const DataProviderContext = createContext();
 
 const DataProvider = ({ children }) => {
-  const [activeFilter, setActiveFiter] = useState("ALL");
+  const [activeFilter, setActiveFilter] = useState("ALL");
+  const [activePreviewItemId, setActivePreviewItemId] = useState(null);
+  const [activePreviewItem, setActivePreviewItem] = useState(null);
+  const favourites = useFavourites();
 
-  const contextValue = {
-    activeFilter,
-    updateActiveFilter: setActiveFiter,
-    activePreviewItem: null,
+  const updateActivePreviewItem = (item) => {
+    if (item?.url) {
+      const parts = item.url.split("/");
+      const id = parts[parts.length - 2];
+      setActivePreviewItemId(id);
+    }
+    setActivePreviewItem(item);
   };
+
+  const contextValue = useMemo(
+    () => ({
+      favourites,
+      activeFilter,
+      updateActiveFilter: setActiveFilter,
+      activePreviewItem,
+      activePreviewItemId,
+      updateActivePreviewItem,
+    }),
+    [favourites, activeFilter, activePreviewItem, activePreviewItemId]
+  );
 
   return (
     <DataProviderContext.Provider value={contextValue}>
