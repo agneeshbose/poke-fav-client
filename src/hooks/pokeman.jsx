@@ -33,7 +33,7 @@ const useAllPokemon = () => {
       setHasMore(!!res?.data?.next);
     } catch (err) {
       setError(err);
-      showErrorMessage("Something went wrong!");
+      showErrorMessage(err?.message || "Something went wrong!");
     } finally {
       setIsLoading(false);
     }
@@ -74,7 +74,7 @@ const usePokemon = (id) => {
       setData(res?.data);
     } catch (err) {
       setError(err);
-      showErrorMessage("Something went wrong!");
+      showErrorMessage(err?.message || "Something went wrong!");
     } finally {
       setIsLoading(false);
     }
@@ -121,7 +121,7 @@ const usePokemonEvolutionChain = (id) => {
       setData(evolutions);
     } catch (err) {
       setError(err);
-      showErrorMessage("Something went wrong!");
+      showErrorMessage(err?.message || "Something went wrong!");
     } finally {
       setIsLoading(false);
     }

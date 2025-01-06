@@ -23,7 +23,7 @@ const useFavourites = () => {
       setData(res?.data);
     } catch (err) {
       setError(err);
-      showErrorMessage("Something went wrong!");
+      showErrorMessage(err?.message || "Something went wrong!");
     } finally {
       setIsLoading(false);
     }
@@ -57,7 +57,7 @@ const useAddToFavourites = () => {
       return response;
     } catch (err) {
       setError(err);
-      showErrorMessage("Something went wrong!");
+      showErrorMessage(err?.message || "Something went wrong!");
       return Promise.reject(err);
     } finally {
       setIsLoading(false);
@@ -87,7 +87,7 @@ const useRemoveFromFavourites = () => {
       return response;
     } catch (err) {
       setError(err);
-      showErrorMessage("Something went wrong!");
+      showErrorMessage(err?.message || "Something went wrong!");
       return Promise.reject(err);
     } finally {
       setIsLoading(false);
