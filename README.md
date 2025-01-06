@@ -11,7 +11,7 @@ A simple website containing only the landing page. Since having a huge list of p
 **State management**: Considering the scale of the application, React context is used to manage application wide state and the useState hook is employed to manage individual component states.
 **API integration**: Axios handles HTTP requests throughout the app, with custom hooks created to facilitate API interactions
 **Styling**: Component-level CSS files are used for styling, providing a simple, scoped, and maintainable approach to UI design.
-**Bulid tool**: Vite was chosen as the build tool for its fast and efficient development experience, providing instant module hot reloading (HMR) and optimized build performance through native ES module support.
+**Bulid tool**: Vite was chosen as the build tool for its fast and efficient development experience, providing instant module hot reloading (faster than webpack) and optimized build performance through native ES module support.
 
 ## How to run the app
 
