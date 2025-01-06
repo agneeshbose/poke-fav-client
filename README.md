@@ -17,5 +17,9 @@ A simple website containing only the landing page. Since having a huge list of p
 
 1.  Clone the repository to your local machine
 2.  Install the dependencies using `npm install`
-3.  Update `VITE_API_BASE_URL` in the .`env.development` file to the backend url where you are running`poke-fav-api` express app.
+3.  Update `VITE_API_BASE_URL` in the `.env.development` file to the backend url where you are running`poke-fav-api` express app.
 4.  Run `npm run dev` to start the app locally.
+
+## Cloud instance
+
+The app is currently deployed in vercel and is available to access at https://poke-fav-client-git-main-agneesh-boses-projects.vercel.app/
