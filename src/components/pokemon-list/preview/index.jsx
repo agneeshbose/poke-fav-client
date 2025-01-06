@@ -92,7 +92,7 @@ const Preview = () => {
           </>
         ) : (
           <div className="preview-instruction">
-            Select an item to view the attributes
+            Select a pokeman to view the attributes
           </div>
         )}
       </div>
