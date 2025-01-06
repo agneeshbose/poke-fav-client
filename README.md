@@ -1,8 +1,8 @@
-# Introduction
+## Introduction
 
 This is the frontend codebase for a react js based single page application having features to view a list of pokeman species, preview their attributes and mark those you like as favourite.
 
-# Approach
+## Approach
 
 A simple website containing only the landing page. Since having a huge list of pokeman to find favourites from, a side to side view of the list and preview card is given, since having a popup on each preview might increase the number of clicks and effort hindering smooth navigation. A graphical image and associated attributes are presented in a tabular nature for better readability.
 
