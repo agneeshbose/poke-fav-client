@@ -43,6 +43,18 @@ const Preview = () => {
     );
   }
 
+  const addFavourite = (activePreviewItem) => {
+    if (!isAddLoading) {
+      addToFavourites(activePreviewItem);
+    }
+  };
+
+  const removeFavourite = (itemName) => {
+    if (!isRemoveLoading) {
+      removeFromFavourites(itemName);
+    }
+  };
+
   return (
     <div className="preview-container">
       <div className="preview-header">
@@ -59,7 +71,7 @@ const Preview = () => {
             {isFavourite ? (
               <div
                 className="remove-favourite"
-                onClick={() => removeFromFavourites(activePreviewItem?.name)}
+                onClick={() => removeFavourite(activePreviewItem?.name)}
               >
                 {isRemoveLoading ? (
                   <CircleLoader />
@@ -74,7 +86,7 @@ const Preview = () => {
             ) : (
               <div
                 className="add-favourite"
-                onClick={() => addToFavourites(activePreviewItem)}
+                onClick={() => addFavourite(activePreviewItem)}
               >
                 {isAddLoading ? (
                   <CircleLoader />
